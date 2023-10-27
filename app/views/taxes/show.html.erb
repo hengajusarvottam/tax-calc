@@ -1,0 +1,24 @@
+<!-- app/views/taxes/show.html.erb -->
+
+<h1>Tax Information</h1>
+
+<table>
+  <tr>
+    <th>Yearly Income</th>
+    <td><%= number_to_currency(@tax.income, unit: 'NRS ', separator: '.', delimiter: ',') %></td>
+  </tr>
+  <tr>
+    <th>Yearly Tax</th>
+    <td><%= number_to_currency(@tax.yearly_tax, unit: 'NRS ', separator: '.', delimiter: ',') %></td>
+  </tr>
+  <tr>
+    <th>Monthly Income</th>
+    <td><%= number_to_currency(@tax.monthly_income, unit: 'NRS ', separator: '.', delimiter: ',') %></td>
+  </tr>
+  <tr>
+    <th>Monthly Tax</th>
+    <td><%= number_to_currency(@tax.yearly_tax / 12, unit: 'NRS ', separator: '.', delimiter: ',') %></td>
+  </tr>
+</table>
+
+<%= link_to 'Back', root_path %>
