@@ -1,17 +1,32 @@
-<h1>Tax Calculation</h1>
+<!-- app/views/taxes/new.html.erb -->
+
+<h1>New Tax Information</h1>
 
 <%= form_for @tax do |f| %>
+  <% if @tax.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tax.errors.count, "error") %> prohibited this tax information from being saved:</h2>
+      <ul>
+        <% @tax.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
   <div class="field">
-    <%= f.label :monthly_income, 'Monthly Income' %>
-    <%= f.number_field :monthly_income %>
+    <%= f.label :income, 'Yearly Income' %>
+    <%= f.number_field :income %>
   </div>
+
   <div class="field">
-    <%= f.label :assessment_type %>
-    <%= f.select :assessment_type, ['Single', 'Couple'] %>
+    <%= f.label :assessment_type, 'Assessment Type' %>
+    <%= f.select :assessment_type, options_for_select(Tax::ASSESSMENT_TYPES, @tax.assessment_type) %>
   </div>
+
   <div class="actions">
-    <%= f.submit 'Calculate' %>
+    <%= f.submit 'Save Tax Information' %>
   </div>
 <% end %>
 
-<%= link_to 'Back', root_path %>
+<%= link_to 'Back', taxes_path %>
