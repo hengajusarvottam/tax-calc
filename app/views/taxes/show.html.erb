@@ -4,6 +4,11 @@
 
 <table>
   <tr>
+    <th>Yearly CIT</th>
+    <td><%= number_to_currency(@tax.annual_cit, unit: 'NRS') %></td>
+  </tr>
+
+  <tr>
     <th>Yearly Income</th>
     <td><%= number_to_currency(@tax.income, unit: 'NRS ', separator: '.', delimiter: ',') %></td>
   </tr>
