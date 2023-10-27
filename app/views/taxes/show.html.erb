@@ -1,0 +1,11 @@
+<h1>Tax Calculation</h1>
+<p><strong>Monthly Income:</strong> <%= number_with_delimiter(number_to_currency(@tax.monthly_income, unit: 'NPR '), delimiter: ',') %></p>
+<p><strong>Total Income (Yearly):</strong> <%= number_with_delimiter(number_to_currency(@tax.monthly_income * 12, unit: 'NPR '), delimiter: ',') %></p>
+<% if @tax_yearly.present? %>
+  <p><strong>Tax Payable for the Year:</strong> <%= number_with_delimiter(number_to_currency(@tax_yearly, unit: 'NPR '), delimiter: ',') %></p>
+<% end %>
+<% if @tax_monthly.present? %>
+  <p><strong>Tax Payable for the Month:</strong> <%= number_with_delimiter(number_to_currency(@tax_monthly, unit: 'NPR '), delimiter: ',') %></p>
+<% end %>
+
+<%= link_to 'Back', root_path %>
