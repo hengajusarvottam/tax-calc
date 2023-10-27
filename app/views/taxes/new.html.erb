@@ -3,20 +3,19 @@
 <h1>New Tax Information</h1>
 
 <%= form_for @tax do |f| %>
-  <% if @tax.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@tax.errors.count, "error") %> prohibited this tax information from being saved:</h2>
-      <ul>
-        <% @tax.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div class="field">
     <%= f.label :income, 'Yearly Income' %>
     <%= f.number_field :income %>
+  </div>
+
+  <div class="field">
+    <%= f.label :yearly_bonus, 'Yearly Bonus' %>
+    <%= f.number_field :yearly_bonus %>
+  </div>
+
+  <div class="field">
+    <%= f.label :annual_cit, 'Annual CIT' %>
+    <%= f.number_field :annual_cit %>
   </div>
 
   <div class="field">
