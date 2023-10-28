@@ -1,29 +1,19 @@
-<!-- app/views/taxes/show.html.erb -->
-
-<h1>Tax Information</h1>
-
-<table>
-  <tr>
-    <th>Yearly CIT</th>
-    <td><%= number_to_currency(@tax.annual_cit, unit: 'NRS') %></td>
-  </tr>
-
-  <tr>
-    <th>Yearly Income</th>
-    <td><%= number_to_currency(@tax.income, unit: 'NRS ', separator: '.', delimiter: ',') %></td>
-  </tr>
-  <tr>
-    <th>Yearly Tax</th>
-    <td><%= number_to_currency(@tax.yearly_tax, unit: 'NRS ', separator: '.', delimiter: ',') %></td>
-  </tr>
-  <tr>
-    <th>Monthly Income</th>
-    <td><%= number_to_currency(@tax.monthly_income, unit: 'NRS ', separator: '.', delimiter: ',') %></td>
-  </tr>
-  <tr>
-    <th>Monthly Tax</th>
-    <td><%= number_to_currency(@tax.yearly_tax / 12, unit: 'NRS ', separator: '.', delimiter: ',') %></td>
-  </tr>
-</table>
-
-<%= link_to 'Back', root_path %>
+<main class="max-w-4xl mx-auto w-screen flex flex-col items-center justify-center" style="margin-bottom: 140px;">
+  <header class="my-6">
+    <p class="text-center font-extrabold text-sky-700 tracking-tight text-6xl">Tax Information</p>
+  </header>
+  <table class="w-full grid gap-2 px-4" style="margin-left:245px;">
+    <tr>
+      <th class="w-75 text-right pr-4 font-bold text-gray-700">Yearly Assesible Income</th>
+      <td><%= number_to_currency(@tax.income, unit: 'NRS ', separator: '.', delimiter: ',') %></td>
+    </tr>
+    <tr>
+      <th class="w-75 text-right pr-4 font-bold text-gray-700">Yearly Tax liability</th>
+      <td><%= number_to_currency(@tax.yearly_tax, unit: 'NRS ', separator: '.', delimiter: ',') %></td>
+    </tr>
+    <tr>
+      <th class="w-75 text-right pr-4 font-bold text-gray-700">Monthly Tax</th>
+      <td><%= number_to_currency(@tax.yearly_tax / 12, unit: 'NRS ', separator: '.', delimiter: ',') %></td>
+    </tr>
+  </table>
+</main>
