@@ -1,31 +1,96 @@
 <!-- app/views/taxes/new.html.erb -->
 
-<h1>New Tax Information</h1>
+<main class="max-w-2xl mx-auto w-screen flex flex-col items-center justify-center">
+  <header class="my-6">
+    <p class="text-center font-extrabold text-sky-700 tracking-tight text-6xl">Calculate Tax Information</p>
+  </header>
+  <%= form_for @tax, html: { class: "w-full grid gap-2 px-4" } do |f| %>
+    <div class="flex justify-between">
+      <%= f.label :assessment_type, 'Assessment Type', class: "w-32 text-right pr-4 font-bold text-gray-700" %>
+      <div class="flex-1">
+        <%= f.select :assessment_type, options_for_select(Tax::ASSESSMENT_TYPES, @tax.assessment_type), {}, class: "w-full rounded-md appearance-none border border-gray-300 py-2 px-2 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent" %>
+      </div>
+    </div>
+    <div class="flex justify-between items-center">
+      <%= f.label :income, 'Yearly Income', class: "w-32 text-right pr-4 font-bold text-gray-700" %>
+      <div class="flex-1">
+        <%= f.number_field :income, class: "w-full rounded-md appearance-none border border-gray-300 py-2 px-2 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent" %>
+      </div>
+    </div>
+    <div class="flex justify-between items-center">
+      <%= f.label :yearly_bonus, 'Yearly Bonus', class: "w-32 text-right pr-4 font-bold text-gray-700" %>
+      <div class="flex-1">
+        <%= f.number_field :yearly_bonus, class: "w-full rounded-md appearance-none border border-gray-300 py-2 px-2 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent" %>
+      </div>
+    </div>
+    <div class="flex justify-between items-center">
+      <%= f.label :annual_cit, 'Annual CIT', class: "w-32 text-right pr-4 font-bold text-gray-700" %>
+      <div class="flex-1">
+        <%= f.number_field :annual_cit, class: "w-full rounded-md appearance-none border border-gray-300 py-2 px-2 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent" %>
+      </div>
+    </div>
+    <div class="flex justify-end">
+      <%= f.submit 'Calculate Tax Information', class: "ml-3 inline-flex justify-center py-2 px-2 border border-transparent shadow-sm font-bold rounded-md text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-600" %>
+    </div>
+  <% end %>
+</main>
 
-<%= form_for @tax do |f| %>
-  <div class="field">
-    <%= f.label :income, 'Yearly Income' %>
-    <%= f.number_field :income %>
+<!-- Modal for displaying tax information -->
+<div id="taxModal" class="fixed z-50 inset-0 overflow-y-auto hidden">
+  <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:p-0">
+    <!-- Modal overlay -->
+    <div class="fixed inset-0 transition-opacity" aria-hidden="true" onclick="closeModalOnOverlay()">
+      <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+    </div>
+    <!-- Modal content -->
+    <div class="relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-top sm:max-w-2xl sm:w-full">
+      <!-- Close button -->
+      <div class="absolute top-0 right-0 -mt-6 -mr-6 p-2 cursor-pointer" onclick="closeModal()">
+        <svg class="h-6 w-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </div>
+      <!-- Modal content will be loaded via JavaScript -->
+    </div>
   </div>
+</div>
 
-  <div class="field">
-    <%= f.label :yearly_bonus, 'Yearly Bonus' %>
-    <%= f.number_field :yearly_bonus %>
-  </div>
 
-  <div class="field">
-    <%= f.label :annual_cit, 'Annual CIT' %>
-    <%= f.number_field :annual_cit %>
-  </div>
+<script>
+  // Function to close the modal
+  function closeModal() {
+    document.querySelector('#taxModal').classList.add('hidden');
+  }
 
-  <div class="field">
-    <%= f.label :assessment_type, 'Assessment Type' %>
-    <%= f.select :assessment_type, options_for_select(Tax::ASSESSMENT_TYPES, @tax.assessment_type) %>
-  </div>
+  // Function to close the modal when clicking on overlay
+  function closeModalOnOverlay() {
+    closeModal();
+  }
 
-  <div class="actions">
-    <%= f.submit 'Save Tax Information' %>
-  </div>
-<% end %>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent the default form submission
 
-<%= link_to 'Back', taxes_path %>
+      // Perform an AJAX request to submit the form data and get the response
+      fetch(form.action, {
+        method: form.method,
+        body: new FormData(form)
+      })
+        .then(response => response.text())
+        .then(data => {
+          // Update the modal content with the data from the show.html.erb template
+          const modal = document.querySelector('#taxModal .relative');
+          modal.innerHTML = data;
+
+          // Show the modal
+          document.querySelector('#taxModal').classList.remove('hidden');
+        });
+    });
+  });
+</script>
