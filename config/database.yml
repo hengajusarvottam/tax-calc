@@ -23,7 +23,8 @@ default: &default
 
 development:
   <<: *default
-  database: tax_calculator_development
+  #database: tax_calculator_development
+  url: <%= ENV["POSTGRES_URL_DEVELOPMENT"] %>
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.

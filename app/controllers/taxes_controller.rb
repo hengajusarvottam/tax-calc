@@ -7,29 +7,30 @@ class TaxesController < ApplicationController
 
   def create
     @tax = Tax.new(tax_params)
-
+  
     if @tax.save
       # Calculate and save yearly income with bonus
       yearly_income_with_bonus = @tax.income + @tax.yearly_bonus
-
-      # Deduct CIT from the yearly income with bonus
-      yearly_income_after_cit = yearly_income_with_bonus - @tax.annual_cit
-
-      @tax.update(income: yearly_income_after_cit)
-
-      calculate_tax(yearly_income_after_cit, @tax.assessment_type)
+  
+      # Deduct CIT and SSF from the yearly income with bonus
+      yearly_income_after_cit_ssf = yearly_income_with_bonus - @tax.annual_cit - @tax.annual_ssf
+  
+      @tax.update(income: yearly_income_after_cit_ssf)
+  
+      calculate_tax(yearly_income_after_cit_ssf, @tax.assessment_type)
       @tax.save  # Save the calculated yearly_tax
-
+  
       # Calculate and save monthly income based on yearly income
-      monthly_income = yearly_income_after_cit / 12
+      monthly_income = yearly_income_after_cit_ssf / 12
       @tax.update(monthly_income: monthly_income)
-
+  
       redirect_to @tax, notice: 'Tax information was successfully saved and calculated.'
     else
       flash.now[:alert] = 'Tax information could not be saved.'
       render 'new'
     end
   end
+  
   
   def show
     @tax = Tax.find(params[:id])
@@ -39,7 +40,7 @@ class TaxesController < ApplicationController
   private
 
   def tax_params
-    params.require(:tax).permit(:income, :assessment_type, :yearly_bonus, :annual_cit)
+    params.require(:tax).permit(:income, :assessment_type, :yearly_bonus, :annual_cit, :annual_ssf)
   end
 
   def calculate_tax(yearly_income, assessment_type)

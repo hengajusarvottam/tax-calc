@@ -29,6 +29,12 @@
         <%= f.number_field :annual_cit, class: "w-full rounded-md appearance-none border border-gray-300 py-2 px-2 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent" %>
       </div>
     </div>
+    <div class="flex justify-between items-center">
+      <%= f.label :annual_ssf, 'Annual SSF', class: "w-32 text-right pr-4 font-bold text-gray-700" %>
+      <div class="flex-1">
+        <%= f.number_field :annual_ssf, class: "w-full rounded-md appearance-none border border-gray-300 py-2 px-2 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent" %>
+      </div>
+    </div>
     <div class="flex justify-end">
       <%= f.submit 'Calculate Tax Information', class: "ml-3 inline-flex justify-center py-2 px-2 border border-transparent shadow-sm font-bold rounded-md text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-600" %>
     </div>

@@ -8,6 +8,22 @@
       <td><%= number_to_currency(@tax.income, unit: 'NRS ', separator: '.', delimiter: ',') %></td>
     </tr>
     <tr>
+      <th class="w-75 text-right pr-4 font-bold text-gray-700">Annual CIT</th>
+      <td><%= number_to_currency(@tax.annual_cit, unit: 'NRS ', separator: '.', delimiter: ',') %></td>
+    </tr>
+    <tr>
+      <th class="w-75 text-right pr-4 font-bold text-gray-700">Monthly CIT</th>
+      <td><%= number_to_currency(@tax.annual_cit / 12, unit: 'NRS ', separator: '.', delimiter: ',') %></td>
+    </tr>
+    <tr>
+      <th class="w-75 text-right pr-4 font-bold text-gray-700">Annual SSF</th>
+      <td><%= number_to_currency(@tax.annual_ssf, unit: 'NRS ', separator: '.', delimiter: ',') %></td>
+    </tr>
+    <tr>
+      <th class="w-75 text-right pr-4 font-bold text-gray-700">Monthly SSF</th>
+      <td><%= number_to_currency(@tax.annual_ssf / 12, unit: 'NRS ', separator: '.', delimiter: ',') %></td>
+    </tr>
+    <tr>
       <th class="w-75 text-right pr-4 font-bold text-gray-700">Yearly Tax liability</th>
       <td><%= number_to_currency(@tax.yearly_tax, unit: 'NRS ', separator: '.', delimiter: ',') %></td>
     </tr>

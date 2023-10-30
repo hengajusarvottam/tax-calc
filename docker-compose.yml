@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:11-alpine
+    restart: always
+    # ports: 
+    #   - 5432:5432
+    #volumes:
+    #  - /opt/tax/database:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=myPassword
+      - POSTGRES_USER=tax
+  
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10K"
+        max-file: "4"
+
+  app:
+    image: tax:latest
+    restart: always
+    ports:
+      - 3000:3000
+    environment:
+      - POSTGRES_URL_DEVELOPMENT=postgresql://tax:myPassword@db:5432/tax-db
+    depends_on:
+      - db
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20M"
+        max-file: "4"

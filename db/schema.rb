@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_27_084825) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_29_080540) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,10 +19,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_084825) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "assessment_type"
-    t.integer "monthly_income"
-    t.decimal "yearly_tax", precision: 10, scale: 2
-    t.float "yearly_bonus"
-    t.float "annual_cit"
+    t.integer "monthly_income", default: 0
+    t.integer "yearly_tax", default: 0
+    t.integer "yearly_bonus", default: 0
+    t.integer "annual_cit", default: 0
+    t.integer "annual_ssf", default: 0
   end
 
 end
